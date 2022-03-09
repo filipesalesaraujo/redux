@@ -1,36 +1,36 @@
-import React from 'react'
-import {useSelector} from 'react-redux'
+import React from "react";
+import { useSelector } from "react-redux";
+import { IState } from "../store";
+import { ICartItem } from "../store/modules/cart/types";
 
 const Cart: React.FC = () => {
+  const cart = useSelector<IState, ICartItem[]>((state) => state.cart.items);
 
-    const state = useSelector(state => state)
-    console.log(state);
-
-    return (
+  return (
     <>
-        <h1>Cart</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                </tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                </tr>
-            </tbody>
+      <h1>Cart</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
 
-        </table>
+        <tbody>
+          {cart.map((item) => (
+            <tr key={item.product.id}>
+              <td>{item.product.title}</td>
+              <td>{item.product.price}</td>
+              <td>{(item.product.price * item.quantity).toFixed(2)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </>
-    )
-}
+  );
+};
 
 export default Cart;
